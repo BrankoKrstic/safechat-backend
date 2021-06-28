@@ -1,12 +1,16 @@
-const express = require("express");
-const app = express();
-
 const PORT = process.env.PORT || 8080;
 
-app.get("/", (req, res) => {
-	res.send("Hello World");
+const io = require("socket.io")(PORT, {
+	cors: {
+		origin: "http://localhost:3000",
+		methods: ["GET", "POST"],
+	},
 });
 
-app.listen(PORT, () => {
-	console.log(`Listening on port ${PORT}`);
+io.on("connection", (socket) => {
+	const id = socket.handshake.query.id;
+	socket.join(id);
+	socket.on("send-message", (data) => {
+		console.log(data.message);
+	});
 });
