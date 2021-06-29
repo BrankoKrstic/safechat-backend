@@ -10,17 +10,18 @@ const io = require("socket.io")(PORT, {
 io.on("connection", (socket) => {
 	const { userId, username } = socket.handshake.query;
 	socket.join(userId);
-	const allSockets = io.of("/").sockets;
-	const connectedSockets = [];
-	for (let socket of allSockets) {
-		if (socket[1].connected) {
-			connectedSockets.push({
-				username: socket[1].handshake.query.username,
-				userId: socket[1].handshake.query.userId,
-			});
+	setInterval(() => {
+		const allSockets = io.of("/").sockets;
+		const connectedSockets = {};
+		for (let socket of allSockets) {
+			if (socket[1].connected) {
+				connectedSockets[socket[1].handshake.query.userId] =
+					socket[1].handshake.query.username;
+			}
 		}
-		io.emit("chat-join", connectedSockets);
-	}
+		console.log(connectedSockets);
+		io.emit("chat-data", connectedSockets);
+	}, 5000);
 	socket.on("send-message", (message) => {
 		socket.broadcast.emit("message", message);
 	});
