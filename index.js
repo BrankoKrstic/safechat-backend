@@ -1,16 +1,21 @@
-const PORT = process.env.PORT || 8080;
+if (process.env.NODE_ENV !== "production") {
+	require("dotenv").config();
+}
 
-const io = require("socket.io")(PORT, {
+const io = require("socket.io")(process.env.PORT, {
 	cors: {
-		origin: ["http://localhost:3000", "http://localhost:3001"],
+		origin: ["http://localhost:3000"],
 		methods: ["GET", "POST"],
 	},
 });
 
+let i;
+
 io.on("connection", (socket) => {
-	const { userId, username } = socket.handshake.query;
+	const { userId } = socket.handshake.query;
 	socket.join(userId);
-	setInterval(() => {
+	clearInterval(i);
+	i = setInterval(() => {
 		const allSockets = io.of("/").sockets;
 		const connectedSockets = {};
 		for (let socket of allSockets) {
@@ -19,7 +24,6 @@ io.on("connection", (socket) => {
 					socket[1].handshake.query.username;
 			}
 		}
-		console.log(connectedSockets);
 		io.emit("chat-data", connectedSockets);
 	}, 5000);
 	socket.on("send-message", (message) => {

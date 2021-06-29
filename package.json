@@ -9,6 +9,7 @@
   "author": "Branko Krstic",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "socket.io": "^4.1.2"
   },
   "devDependencies": {
