@@ -1,18 +1,19 @@
 {
-  "name": "safechat-backend",
-  "version": "1.0.0",
-  "description": "Live chat application with E2E encryption for private conversations",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "Branko Krstic",
-  "license": "ISC",
-  "dependencies": {
-    "dotenv": "^10.0.0",
-    "socket.io": "^4.1.2"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.9"
-  }
+	"name": "safechat-backend",
+	"version": "1.0.0",
+	"description": "Live chat application with E2E encryption for private conversations",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node index.js"
+	},
+	"author": "Branko Krstic",
+	"license": "ISC",
+	"dependencies": {
+		"dotenv": "^10.0.0",
+		"socket.io": "^4.1.2"
+	},
+	"devDependencies": {
+		"nodemon": "^2.0.9"
+	}
 }
